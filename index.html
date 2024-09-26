@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ประวัติการซื้อหวย</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+            display: none; /* ซ่อนเนื้อหาทั้งหมดก่อน */
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .lottery-category {
+            font-weight: bold;
+            writing-mode: horizontal-tb;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div id="uid-check" class="container">
+        <h1>เช็คประวัติการซื้อหวย</h1>
+        <p>กรุณาใส่ UID ของคุณ</p>
+        <input type="text" id="uidInput" placeholder="กรอก UID ของคุณ" required>
+        <br>
+        <button onclick="checkUID()">ตรวจสอบประวัติ</button>
+    </div>
+
+    <div id="history-section" style="display:none;">
+        <h1>ประวัติการซื้อหวยของ UID: <span id="uid"></span></h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ประเภทหวย</th>
+                    <th>เลขที่ซื้อ</th>
+                    <th>วันที่ซื้อ</th>
+                    <th>สถานะ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="lottery-category">หวยไทย</td>
+                    <td>123456</td>
+                    <td>01/09/2024</td>
+                    <td>ถูกรางวัล</td>
+                </tr>
+                <tr>
+                    <td class="lottery-category">หวยลาว</td>
+                    <td>789101</td>
+                    <td>05/09/2024</td>
+                    <td>ไม่ถูกรางวัล</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // ฟังก์ชันตรวจสอบ UID
+        function checkUID() {
+            const uid = document.getElementById('uidInput').value;
+            if (uid) {
+                // เก็บ UID ใน localStorage
+                localStorage.setItem('uid', uid);
+                showHistory();
+            }
+        }
+
+        // ฟังก์ชันแสดงประวัติ
+        function showHistory() {
+            const uid = localStorage.getItem('uid');
+            if (uid) {
+                document.getElementById('uid').textContent = uid;
+                document.getElementById('uid-check').style.display = 'none'; // ซ่อนฟอร์มกรอก UID
+                document.getElementById('history-section').style.display = 'block'; // แสดงประวัติ
+                document.body.style.display = 'block'; // แสดงเนื้อหาทั้งหมด
+            } else {
+                document.getElementById('uid-check').style.display = 'block'; // แสดงฟอร์มกรอก UID
+                document.getElementById('history-section').style.display = 'none'; // ซ่อนประวัติ
+                document.body.style.display = 'block'; // แสดงเนื้อหาทั้งหมด
+            }
+        }
+
+        // เมื่อโหลดหน้าเว็บ ตรวจสอบว่า UID มีอยู่หรือไม่
+        window.onload = function() {
+            showHistory();
+        }
+    </script>
+</body>
+</html>
